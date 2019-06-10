@@ -18,8 +18,10 @@ app.use(express.json());
 app.use(express.static('./public'));
 
 // Actual Routes
-app.use(require('../routes/players.js'));
-app.use(require('../routes/teams.js'));
+// app.use(require('../routes/players.js'));
+// app.use(require('../routes/teams.js'));
+// Bind _any_ API model
+app.use(require('../routes/api.js'));
 
 app.use('*', notFoundHandler);
 app.use(errorHandler);
