@@ -7,6 +7,7 @@ const mongooseOptions = {
   useNewUrlParser:true,
   useCreateIndex: true,
 };
-mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
-
-require('./lib/server.js').start(process.env.PORT);
+mongoose.connect(process.env.MONGODB_URI, mongooseOptions)
+  .then(() => {
+    require('./lib/server.js').start(process.env.PORT);
+  });

@@ -1,9 +1,25 @@
 'use strict';
 
-const teamSchema = require('./teams-schema.js');
-const dataModel = require('./model.js');
+const Team = require('./team-model');
 
-class Teams extends dataModel { }
+class TeamRepository {
+  get(_id) {
+    let queryObject = _id ? { _id } : {};
+    return Team.find(queryObject);
+  }
 
+  post(record) {
+    let newRecord = new Team(record);
+    return newRecord.save();
+  }
 
-module.exports = new Teams(teamSchema);
+  put(id, entry) {
+    return Promise.reject('not implemented');
+  }
+
+  delete(id) {
+    return Promise.reject('not implemented');
+  }
+}
+
+module.exports = new TeamRepository();

@@ -1,9 +1,25 @@
 'use strict';
 
-const schema = require('./players-schema.js');
-const dataModel = require('./model.js');
+const Player = require('./player-model');
 
-class Players extends dataModel { }
+class PlayerRepository {
+  get(_id) {
+    let queryObject = _id ? { _id } : {};
+    return Player.find(queryObject);
+  }
 
+  post(record) {
+    let newRecord = new Player(record);
+    return newRecord.save();
+  }
 
-module.exports = new Players(schema);
+  put(id, entry) {
+    return Promise.reject('not implemented');
+  }
+
+  delete(id) {
+    return Promise.reject('not implemented');
+  }
+}
+
+module.exports = new PlayerRepository();

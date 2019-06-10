@@ -9,8 +9,6 @@ const errorHandler = require('../middleware/500.js');
 const notFoundHandler = require('../middleware/404.js');
 
 // Custom Routes
-const apiRouter = require('../routes/v1.js');
-
 const app = express();
 
 app.use(cors());
@@ -20,7 +18,8 @@ app.use(express.json());
 app.use(express.static('./public'));
 
 // Actual Routes
-app.use(apiRouter);
+app.use(require('../routes/players.js'));
+app.use(require('../routes/teams.js'));
 
 app.use('*', notFoundHandler);
 app.use(errorHandler);
