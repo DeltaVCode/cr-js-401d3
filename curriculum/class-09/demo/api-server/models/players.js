@@ -1,24 +1,11 @@
 'use strict';
 
 const Player = require('./player-model');
+const BaseRepository = require('./base-repository');
 
-class PlayerRepository {
-  get(_id) {
-    let queryObject = _id ? { _id } : {};
-    return Player.find(queryObject);
-  }
-
-  post(record) {
-    let newRecord = new Player(record);
-    return newRecord.save();
-  }
-
-  put(id, entry) {
-    return Promise.reject('not implemented');
-  }
-
-  delete(id) {
-    return Promise.reject('not implemented');
+class PlayerRepository extends BaseRepository {
+  constructor() {
+    super(Player);
   }
 }
 

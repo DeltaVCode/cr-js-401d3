@@ -1,24 +1,11 @@
 'use strict';
 
 const Team = require('./team-model');
+const BaseRepository = require('./base-repository');
 
-class TeamRepository {
-  get(_id) {
-    let queryObject = _id ? { _id } : {};
-    return Team.find(queryObject);
-  }
-
-  post(record) {
-    let newRecord = new Team(record);
-    return newRecord.save();
-  }
-
-  put(id, entry) {
-    return Promise.reject('not implemented');
-  }
-
-  delete(id) {
-    return Promise.reject('not implemented');
+class TeamRepository extends BaseRepository {
+  constructor() {
+    super(Team);
   }
 }
 
