@@ -17,6 +17,11 @@ app.use(express.json());
 
 app.use(express.static('./public'));
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require(`${__dirname}/../docs/config/swagger.json`);
+
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // Actual Routes
 // app.use(require('../routes/players.js'));
 // app.use(require('../routes/teams.js'));

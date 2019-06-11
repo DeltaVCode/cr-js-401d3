@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "docs": "node ./docs/config/swagger.js",
     "start": "node index.js",
     "watch": "nodemon index.js",
     "test-watch": "jest --watchAll",
@@ -30,5 +31,8 @@
     "require-directory": "^2.1.1",
     "supertest": "^3.3.0",
     "swagger-ui-express": "^4.0.2"
+  },
+  "devDependencies": {
+    "express-swagger-generator": "^1.1.14"
   }
 }
