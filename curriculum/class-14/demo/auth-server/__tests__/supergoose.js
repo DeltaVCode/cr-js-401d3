@@ -41,7 +41,7 @@ supergoose.startDB = async () => {
  */
 supergoose.stopDB = async () => {
   await mongoose.disconnect();
-  mongoServer.stop();
+  await mongoServer.stop();
 };
 
 if (!module.parent) {

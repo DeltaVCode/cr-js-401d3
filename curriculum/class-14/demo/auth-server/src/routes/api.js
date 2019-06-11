@@ -6,6 +6,6 @@ const express = require('express');
 
 const router = module.exports = new express.Router();
 
-router.get('/system', auth('admin'), (req, res) => {
-  res.send('Admin only!');
+router.get('/secrets', auth('system'), (req, res) => {
+  res.send('System secrets!');
 });
