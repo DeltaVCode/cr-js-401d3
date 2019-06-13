@@ -2,7 +2,7 @@
 
 console.log('Starting my app!');
 
-require('./logger');
+require('./network-logger');
 require('./cache');
 
 const hub = require('./hub');
@@ -11,7 +11,10 @@ var nextId = 1;
 function saveToDb(document) {
   document.id = nextId++;
   // TODO: actually save...
-  hub.emit('save', document);
+
+  setTimeout(() => {
+    hub.emit('save', document);
+  }, 500 + Math.random() * 50);
 }
 
 // hub.on('save', console.log)

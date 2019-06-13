@@ -25,6 +25,9 @@ server.on('connection', socket => {
     socketPool[socketId].write(`${id} connected!\r\n`);
   }
 
+  socket.on('error', err => {
+    console.error(id, err);
+  });
   socket.on('data', dataHandler);
   socket.on('close', () => {
     console.log(id, 'closing!');
