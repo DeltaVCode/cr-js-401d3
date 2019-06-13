@@ -36,5 +36,13 @@ server.on('connection', socket => {
 // TODO: add tests that have nothing to do with the socket
 // NOTE: use call/bind/apply to specify 'this' in tests!
 function dataHandler(buffer) {
-  console.log(this.id, buffer.toString().trim());
+  let id = this.id;
+  let text = buffer.toString().trim();
+  console.log(id, text);
+
+  for (let socketId in socketPool) {
+    if (socketId === id) continue;
+
+    socketPool[socketId].write(`${id}: ${text}\r\n`);
+  }
 }
