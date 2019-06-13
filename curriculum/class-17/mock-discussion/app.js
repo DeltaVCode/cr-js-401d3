@@ -2,16 +2,21 @@
 
 const fs = require('fs');
 
-const alterFile = (file) => {
+const alterFile = (file, cb) => {
   fs.readFile( file, (err, data) => {
-    if(err) { throw err; }
+    if(err) { return cb(err); }
     let text = data.toString().toUpperCase();
     fs.writeFile( file, Buffer.from(text), (err, data) => {
-      if(err) { throw err; }
+      if(err) { return cb(err); }
       console.log(`${file} saved`);
+      cb();
     });
   });
 };
 
-let file = process.argv.slice(2).shift();
-alterFile(file);
+if (!module.parent) {
+  let file = process.argv.slice(2).shift();
+  alterFile(file);
+}
+
+module.exports = { alterFile };

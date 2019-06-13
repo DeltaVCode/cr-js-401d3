@@ -14,7 +14,7 @@ exports.readFile = (file, cb) => {
     return delay(cb, 'Invalid File');
   }
 
-  delay(cb, undefined, written[file] || Buffer.from(`${file} Contents`));
+  delay(cb, null, written[file] || Buffer.from(`${file} Contents`));
 };
 
 exports.writeFile = (file, buffer, cb) => {
@@ -33,7 +33,20 @@ exports.writeFile = (file, buffer, cb) => {
   }
 
   written[file] = buffer;
-  delay(cb, undefined, undefined);
+  delay(cb, null, undefined);
+};
+
+exports.unlink = (file, cb) => {
+  if (typeof file !== 'string') {
+    throw TypeError('"file" must be a string');
+  }
+
+  if (file.match(/bad/i)) {
+    return delay(cb, 'Invalid File');
+  }
+
+  delete written[file];
+  cb();
 };
 
 function delay(callback, err, result) {
