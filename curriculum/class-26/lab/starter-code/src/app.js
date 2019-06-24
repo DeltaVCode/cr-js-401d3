@@ -24,7 +24,10 @@ class Main extends React.Component {
 
   handleButtonClick = e => {
     e.preventDefault();
-    this.setState({ stuff: Math.floor(Math.random() * 20 + 1) });
+
+    this.setState(state => ({
+      stuff: Math.floor(Math.random() * 20 + 1)
+    }));
   };
 
   render() {

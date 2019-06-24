@@ -15,7 +15,7 @@ const Footer = () => <footer>&copy; 2018 Code Fellows</footer>;
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    let params = new URL(document.location).searchParams;
+
     this.state = {
       words: 'nothing to see here',
     };
@@ -28,11 +28,13 @@ class Main extends React.Component {
 
   handleClick = e => {
     e.preventDefault();
-    let words = this.state.words
-      .split('')
-      .reverse()
-      .join('');
-    this.setState({ words });
+
+    this.setState(state => ({
+      words: state.words
+        .split('')
+        .reverse()
+        .join(''),
+    }));
   };
 
   render() {
