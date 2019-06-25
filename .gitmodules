@@ -1,0 +1,3 @@
+[submodule "curriculum/class-27/demo"]
+	path = curriculum/class-27/demo
+	url = https://github.com/DeltaVCode/cr-js-401d3-class-27.git
