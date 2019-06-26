@@ -1,6 +1,6 @@
 [submodule "curriculum/class-27/demo"]
 	path = curriculum/class-27/demo
 	url = https://github.com/DeltaVCode/cr-js-401d3-class-27.git
-[submodule ".\\curriculum\\class-28\\demo\\resty"]
-	path = .\\curriculum\\class-28\\demo\\resty
+[submodule "curriculum/class-27/demo/resty"]
+	path = curriculum/class-28/demo/resty
 	url = https://github.com/DeltaVCode/cr-js-401d3-resty.git
