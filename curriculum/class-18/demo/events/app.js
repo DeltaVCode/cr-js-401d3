@@ -2,6 +2,7 @@
 
 console.log('Starting my app!');
 
+require('./logger');
 require('./network-logger');
 require('./cache');
 

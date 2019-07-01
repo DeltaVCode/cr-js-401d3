@@ -2,6 +2,7 @@
 
 const eventHub = require('./hub');
 
+console.log('LOGGER enabled');
 eventHub.on('save', handleSave);
 eventHub.on('delete', log('delete'));
 eventHub.on('update', log('update'));

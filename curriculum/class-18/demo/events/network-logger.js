@@ -2,13 +2,11 @@
 
 const eventHub = require('./hub');
 
-const net = require('net');
-const client = new net.Socket();
+const io = require('socket.io-client');
+const socket = io.connect('http://localhost:3000/database');
 
-const LOGGER_PORT = process.env.LOGGER_PORT || 3001;
-const LOGGER_HOST = process.env.LOGGER_HOST || 'localhost';
-
-client.connect(LOGGER_PORT, LOGGER_HOST, initializeLogger);
+console.log('Socket connected?', socket);
+initializeLogger();
 
 function initializeLogger() {
   eventHub.on('save', log('save'));
@@ -17,10 +15,7 @@ function initializeLogger() {
 
   function log(eventType) {
     return payload => {
-      let json = JSON.stringify({
-        eventType, payload
-      });
-      client.write(`${json}\r\n`);
+      socket.emit(eventType, payload);
     };
   }
 }

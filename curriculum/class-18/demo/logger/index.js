@@ -1,18 +1,13 @@
 'use strict';
 
-const net = require('net');
-const client = new net.Socket();
+const client = require('socket.io-client');
 
-const PORT = process.env.port || 3001;
+const socket = client.connect('http://localhost:3000');
 
-client.connect(PORT, 'localhost', () => {
-  console.log(`Connected on port ${PORT}!`);
+socket.on('spoken', data => {
+  console.log('LOG spoken', data);
 });
 
-client.on('data', data => {
-  console.log('LOG', data.toString());
-});
-
-client.on('close', () => {
-  console.log('Connection closed!');
-});
+socket.on('save', (payload) => {
+  console.log('LOG save', payload);
+})
