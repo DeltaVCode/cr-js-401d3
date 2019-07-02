@@ -4,6 +4,7 @@ console.log('Starting my app!');
 
 require('./logger');
 require('./network-logger');
+require('./queue-publisher');
 require('./cache');
 
 const hub = require('./hub');
@@ -22,3 +23,5 @@ function saveToDb(document) {
 
 saveToDb({ name: 'Keith' });
 saveToDb({ name: 'David' });
+
+hub.emit('attack', { ipAddress: '555.324.12', path: '/login' });

@@ -3,6 +3,17 @@
 const ioFactory = require('socket.io')
 const io = ioFactory(3000); // Listen for HTTP
 
+const Q = require('@nmq/q/server');
+Q.start();
+
+const dbQ = new Q('database');
+dbQ.monitorEvent('create');
+dbQ.monitorEvent('update');
+dbQ.monitorEvent('delete');
+
+const netQ = new Q('network');
+netQ.monitorEvent('attack');
+
 io.on('connection', socket => {
   console.log('Connected', socket.id);
 

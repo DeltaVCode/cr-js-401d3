@@ -1,13 +1,22 @@
 'use strict';
 
-const client = require('socket.io-client');
+const Q = require('@nmq/q/client');
 
-const socket = client.connect('http://localhost:3000');
+const db = new Q('database');
 
-socket.on('spoken', data => {
-  console.log('LOG spoken', data);
+db.subscribe('update', (payload) => {
+  console.log('DB UPDATE', payload);
 });
 
-socket.on('save', (payload) => {
-  console.log('LOG save', payload);
-})
+db.subscribe('delete', (payload) => {
+  console.log('DB DELETE', payload);
+});
+
+console.log(db.subscriptions());
+
+const netQ = new Q('network');
+netQ.subscribe('attack', request => {
+  console.log('attack!', request);
+});
+
+console.log('netQ subs', netQ.subscriptions());
