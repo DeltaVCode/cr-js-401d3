@@ -1,4 +1,4 @@
-# Reading: Application State
+# Reading: Hooks API
 
 Below is a collection of resources of varying types and lengths which describe the topics for the upcoming lecture.  As you go through the readings each day, you'll find that certain sources work better for your reading and learning style. Focus on those, but also branch out and consume the material in different forms.
 
@@ -10,17 +10,21 @@ Wiki Entry Ideas:
 * Notes in outline form
 
 ## Read
-* [worlds easiest guide to redux](https://medium.freecodecamp.org/understanding-redux-the-worlds-easiest-guide-to-beginning-redux-c695f45546f6)
-* [testing with redux and enzyme](https://medium.com/netscape/testing-a-react-redux-app-using-jest-and-enzyme-b349324803a9)
-* [testing reducers](https://medium.com/@netxm/testing-redux-reducers-with-jest-6653abbfe3e1)
+* [hooks api](https://reactjs.org/docs/hooks-overview.html)
+* [effects hook](https://reactjs.org/docs/hooks-effect.html)
+
+## Skim
+* [global state management with hooks](https://blog.usejournal.com/global-state-management-with-react-hooks-5e453468c5bf)
 
 ## Watch
-* [Abramov Tutorials](https://egghead.io/courses/getting-started-with-redux)
+* [making sense of hooks](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889)
 
 ## Bookmark
-* [Redux Docs](https://redux.js.org/)
-* [enzyme-redux](https://www.npmjs.com/package/enzyme-redux)
-* [middleware tests with a mock store](https://github.com/codefellows/seattle-javascript-401n4/blob/master/lectures/36-asynchronous-actions/demos/todo/client/src/app/middleware/__test__/reporter.test.js)
+* [use hooks](https://usehooks.com/)
+* [hooks list](https://github.com/rehooks/awesome-react-hooks)
+* [hooks api reference](https://reactjs.org/docs/hooks-reference.html)
+
+
 
 
 

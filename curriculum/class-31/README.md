@@ -1,12 +1,10 @@
-# Application State
+# Hooks API
 
 ## Learning Objectives
 
-**Students will be able to ...**
-
-* Manage state at an application level using a Redux Store
-* Understand the basic roles of Actions and Reducers
-* Implement the core Redux Boilerplating required to participate in a store-based state managed application
+* Use the Hooks API to manage state in a functional component
+* Interact with Context using Hooks
+* Create custom hooks
 
 ## Outline
 * :05 **Housekeeping/Recap**
@@ -18,146 +16,103 @@
 * Break
 * :60 **Main Topic**
 
-## UI Concept:
-* Component Styling
-* `<Header />` and `<Footer />` components
 
-## Main Topic:
-* Global State
-* Redux Stores
-* Actions and Reducers
-* **[DEMO](https://codesandbox.io/s/2p30m03o9n)** (explained below)
+### Hooks
 
-**Store**
+React hooks allow to to easily create and manage state in a **functional** component.
 
-Ultimately, the "store" is where your application state is, well, stored.  The store's job is to identify the various reducers and middleware that need to be made available and used globally.
+Hooks are JavaScript functions, but they impose additional rules:
 
-React uses "reducers" to hold and manage state. Reducers typically manage just one part of the larger application state.  For example, in a storefront application, you would likely have a separate reducer for Products, Categories, and Carts
+* Hooks must be named with a `use` prefix (i.e. `useFishingPole`)
+* Only call Hooks at the top level. Don’t call Hooks inside loops, conditions, or nested functions.
+* Only call Hooks from React function components. Don’t call Hooks from regular JavaScript functions. (There is just one other valid place to call Hooks — your own custom Hooks. We’ll learn about them in a moment.)
 
-Here's a sample reducer for a shopping cart. As you can see it creates an initial "empty" state, and then identifies what todo when a certain action (e.g. INITIALIZE) is called. Reducers always "Hear" that an action was dispatched, and use whatever "payload" they receive to do their work.
+**Built In Hooks**
 
-```javascript
-let initialState = { customerId: null, items: [] };
+`useState()` 
 
-const myReducer = (state = initialState, action) => {
-  let { type, payload } = action;
-
-  switch (type) {
-    case 'INITIALIZE': 
-      return {customerId: payload.id};
-      
-    case 'ADD_ITEM':
-      return { items: [...items, payload.item] };
-      
-    case 'CLEAR':
-      return initialState;
-
-    default:
-      return state;
-  }
-};
-```
-
-React applications with Redux dispatch "actions" (like an event) with "payload" (data). An action creator function as shown below always returns an action object with the action type to perform and the data to perform it with.  When your component wants to modify state, it "Dispatches" (calls) an action and sends whatever payload (data) it needs to, to the reducer.
-
-When an action is dispatched, a reducer responds to it, and receives that payload, where it then operates on state using it.
+Returns a getter and setter for your state value
 
 ```javascript
-// actions.js
-const newCart = customer => {
-  return {
-    type: 'INITIALIZE',
-    payload: customer,
-  };
-};
-
+ import React from 'react';
+ import { useState } from 'react';
+ 
+ function Counter() {
+   const [clicks, setClicks] = useState(0);
+ 
+   return (
+     <div>
+       <h2>Button has been clicked {clicks} time(s)</h2>
+       <button type="button" onClick={() => setClicks(clicks + 1)}>
+         Update Count
+       </button>
+     </div>
+   );
+ }
+ 
+ export default Counter;
 ```
 
-We use a store to "bring it all together" ... in the store, you declare what middleware you may need and the reducers that you'll use to manage your state data
+`useContext()` 
 
-```javascript
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+Returns and provides access to whatever your context provider exports
 
-import cartReducer from './reducers/cart.js';
+In this example, our context provider gives us a `title` property and a `changeTitleTo()` method that we can call. This is much easier than referencing the context variable inline as you normally would.
 
-let reducers = combineReducers({
-  cart: cartReducer,
-});
-
-export default () => createStore(reducers);
-```
-
-Components subscribe to the store and get to use actions with a bit of boilerplate code ...
-
-In this example, when the 'Start Shopping' button is clicked, it runs a method called `this.props.initializeTheCart()`. 
-
-This method is declared in the `mapDispatchToProps` function as a pointer to the `newCart()` method in the actions file. 
-
-When you do this, you get to use `this.props.initializeTheCart` as a method. That's what the mapper does for you, along with mapping the reducers's state to `this.props` with the key that you specified.
-
+Note -- the context API is still critically important even with this hook available. Not every React shop is using hooks, so know both ways.
 
 ```javascript
 import React from 'react';
-import { connect } from 'react-redux';
+import faker from 'faker';
+import { useContext } from 'react';
+import { SettingsContext } from './settings/context';
 
-import * as actions from '../store/actions.js';
+function Counter() {
+  const context = useContext(SettingsContext);
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <button onClick={this.props.initializeTheCart}>
-        Start Shopping!
+  return (
+    <div>
+      <h2>{context.title}</h2>
+      <button
+        type="button"
+        onClick={() => context.changeTitleTo(faker.company.companyName())}
+      >
+        Change Title
       </button>
-    );
-  }
+    </div>
+  );
 }
 
-const mapStateToProps = state => ({
-  cart: state.cart,
-});
-
-const mapDispatchToProps = (dispatch, getState) => ({
-  initializeTheCart: () => dispatch(actions.newCart()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+export default Counter;
 
 ```
 
-Before any of this can work, your entire application needs to be given access to the store. Your component (above) uses the redux `connect()` method to attach to the store, but without first "Providing" it to your application, that connection will fail.  The provider wrapper is a means that React uses to allow child components to have access to higher level context.
+`useReducer()` 
 
+An alternative to useState. Accepts a reducer of type (state, action) => newState, and returns the current state paired with a dispatch method. (If you’re familiar with Redux, you already know how this works.)
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+const initialState = {count: 0};
 
-import './style.scss';
-
-import App from './components/app';
-
-import createStore from './store';
-const store = createStore();
-
-class Main extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <React.Fragment>
-          <App />
-        </React.Fragment>
-      </Provider>
-    );
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    default:
+      throw new Error();
   }
 }
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(<Main />, rootElement);
+function Counter({initialState}) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+    </>
+  );
+}
 ```
