@@ -1,4 +1,4 @@
-# Reading: Dynamic Forms
+# Reading: Socket.io Client
 
 Below is a collection of resources of varying types and lengths which describe the topics for the upcoming lecture.  As you go through the readings each day, you'll find that certain sources work better for your reading and learning style. Focus on those, but also branch out and consume the material in different forms.
 
@@ -10,17 +10,13 @@ Wiki Entry Ideas:
 * Notes in outline form
 
 ## Read
-[building forms in react](https://www.codementor.io/blizzerand/building-forms-using-react-everything-you-need-to-know-iz3eyoq4y)
-
-## Watch
-* [Luke W modern form design](https://channel9.msdn.com/Events/MIX/MIX10/EX03)
-* [form design](https://www.youtube.com/watch?v=hPS7LUW7SlA)
-
-## Skim
-* [redux-form](https://redux-form.com/)
-* [json-schema-form](https://github.com/mozilla-services/react-jsonschema-form)
+* [socket.io + react](https://medium.com/dailyjs/combining-react-with-socket-io-for-real-time-goodness-d26168429a34)
+* [socket.io with react and express](https://www.valentinog.com/blog/socket-io-node-js-react/)
 
 ## Bookmark
-* [json-schema-form playground](https://mozilla-services.github.io/react-jsonschema-form/)
+* [socket.io docs](https://socket.io/)
+* [socket.io client library](https://www.npmjs.com/package/socket.io-client)
+* [socket.io react library](https://www.npmjs.com/package/socket.io-react)
+
 
 

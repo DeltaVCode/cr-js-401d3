@@ -1,4 +1,4 @@
-# Reading: Remote APIs
+# Reading: Context API
 
 Below is a collection of resources of varying types and lengths which describe the topics for the upcoming lecture.  As you go through the readings each day, you'll find that certain sources work better for your reading and learning style. Focus on those, but also branch out and consume the material in different forms.
 
@@ -10,15 +10,10 @@ Wiki Entry Ideas:
 * Notes in outline form
 
 ## Read
-* [async actions](https://redux.js.org/advanced/asyncactions)
-* [redux thunk](https://alligator.io/redux/redux-thunk/)
-* [suspense](https://blog.logrocket.com/async-rendering-in-react-with-suspense-5d0eaac886c8) (alpha/beta)
+* [context api](https://reactjs.org/docs/context.html)
 
-## Watch
-* [dan abramov on suspense](https://www.youtube.com/watch?v=6g3g0Q_XVb4)
 
 ## Bookmark
-* [thunk middleware](https://github.com/reduxjs/redux-thunk)
-
+* [react context links](https://github.com/diegohaz/awesome-react-context)
 
 

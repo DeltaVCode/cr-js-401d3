@@ -1,4 +1,4 @@
-# Reading: Remote CRUD
+# Reading: `<Login />` and `<Auth />`
 
 Below is a collection of resources of varying types and lengths which describe the topics for the upcoming lecture.  As you go through the readings each day, you'll find that certain sources work better for your reading and learning style. Focus on those, but also branch out and consume the material in different forms.
 
@@ -9,8 +9,9 @@ Wiki Entry Ideas:
 * Dictionary / Flash Cards
 * Notes in outline form
 
-## Skim
-* [redux reddit example](https://redux.js.org/advanced/exampleredditapi)
+## Read
+* [what is rbac?](https://digitalguardian.com/blog/what-role-based-access-control-rbac-examples-benefits-and-more)
 
-
-
+## Bookmark
+* [react-cookies component](https://www.npmjs.com/package/react-cookies)
+* [react-cookie library](https://www.npmjs.com/package/react-cookie)

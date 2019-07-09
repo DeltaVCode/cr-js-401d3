@@ -1,4 +1,4 @@
-# Reading: `<Login />` and `<Auth />`
+# Reading: Dynamic Forms
 
 Below is a collection of resources of varying types and lengths which describe the topics for the upcoming lecture.  As you go through the readings each day, you'll find that certain sources work better for your reading and learning style. Focus on those, but also branch out and consume the material in different forms.
 
@@ -10,8 +10,17 @@ Wiki Entry Ideas:
 * Notes in outline form
 
 ## Read
-* [what is rbac?](https://digitalguardian.com/blog/what-role-based-access-control-rbac-examples-benefits-and-more)
+[building forms in react](https://www.codementor.io/blizzerand/building-forms-using-react-everything-you-need-to-know-iz3eyoq4y)
+
+## Watch
+* [Luke W modern form design](https://channel9.msdn.com/Events/MIX/MIX10/EX03)
+* [form design](https://www.youtube.com/watch?v=hPS7LUW7SlA)
+
+## Skim
+* [redux-form](https://redux-form.com/)
+* [json-schema-form](https://github.com/mozilla-services/react-jsonschema-form)
 
 ## Bookmark
-* [react-cookies component](https://www.npmjs.com/package/react-cookies)
-* [react-cookie library](https://www.npmjs.com/package/react-cookie)
+* [json-schema-form playground](https://mozilla-services.github.io/react-jsonschema-form/)
+
+

@@ -1,11 +1,8 @@
-# Remote APIs
+# Context API
 
 ## Learning Objectives
 
-**Students will be able to ...**
-* Understand and implement `thunk` middleware
-* Perform asynchronous redux actions
-* Take advantage of lifecycle hooks
+* Use the React Context API to tactically manage global state.
 
 ## Outline
 * :05 **Housekeeping/Recap**
@@ -17,55 +14,69 @@
 * Break
 * :60 **Main Topic**
 
-## UI Concept:
-* `<List />` component
+## Computer Science Concept:
+* General Web Security
 
 ## Main Topic:
-Using Redux actions to connect to remote APIs via Thunk Middleware
 
-Normally, action generators return a function, like this:
+### Context
+Context provides a means of passing state down the component tree through a Provider/Consumer relationship.
 
-```javascript
-const get = (payload) => {
-  return {
-    type: 'GET',
-    payload: payload
+At as high a level as makes sense, a "provider" can make it's state available, along with means of altering it (methods). 
+
+```
+import React from 'react';
+
+export const SettingsContext = React.createContext();
+
+class SettingsProvider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      changeTitleTo: this.changeTitleTo,
+      title: 'My Amazing Website',
+    };
+  }
+
+  changeTitleTo = title => {
+    this.setState({ title });
+  };
+
+  render() {
+    return (
+      <SettingsContext.Provider value={this.state}>
+        {this.props.children}
+      </SettingsContext.Provider>
+    );
   }
 }
+
+export default SettingsProvider;
+
 ```
 
-But often, you'll need your actions to do some asynchronous action before you dispatch it to the reducer. For example, you may need to get something from a remote api.
+At the app level ...
+```
+<SettingsContext>
+  <Content />
+</SettingsContext>
+``` 
 
-In this case, we want to set it up like this, where the action you dispatch from your React App returns a function, not an acual action object, which is what Redux **expects** and **requires**
-
-```javascript
-let api = 'https://api.mockable.io/api/v1/stuff';
-
-export const get = () => dispatch => {
-  return utils.fetchData(api).then(records => {
-    dispatch(getAction(records));
-  });
-};
-
-const getAction = payload => {
-  return {
-    type: 'GET',
-    payload: payload,
-  };
-};
+At the lower levels any component can "opt-in" and become a "consumer" and receive state and potentially methods through it.  Note the wrapping of context in a component, and the requirement of using a function to "get" the context object itself, which is `this.state` from the provider component.
+```
+<SettingsContext.Consumer>
+  {context => {
+    console.log(context);
+  return (
+    <div>
+      <h1>{context.title}</h1>
+      <button onClick={() => context.changeTitleTo('Your Website')}>
+        Change Title
+      </button>
+    </div>
+  );
+  }}
+</SettingsContext.Consumer>
 ```
 
-So, we will implement a new piece of middleware, called a "thunk", which inspects every dispatched action and then either lets it go through (in the case of a normal action that returns an object) or it processes the function and then dispatches what that function returns.
 
-Notice in the example above, that the function we ran for the action is curried, and receives `dispatch()`, which it calls with the payload it got from the server.
-
-**What does thunk middleware look like?**
-
-```javascript
-export default store => next => action =>
-  typeof action === 'function'
-    ? action(store.dispatch, store.getState)
-    : next(action);
-```
-
-At its base level, this is all we really need.  However, we're going to be using the `redux-thunk` npm module in our production applications, as it provides more stability and error checking for us.
