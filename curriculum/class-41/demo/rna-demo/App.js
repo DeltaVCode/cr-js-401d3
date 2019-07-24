@@ -1,83 +1,66 @@
-import React from 'react';
-import { StyleSheet, FlatList, Text, View, Button, Linking } from 'react-native';
-import * as Expo from 'expo';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button, FlatList, Linking } from 'react-native';
+import * as Contacts from 'expo-contacts';
+import * as Permissions from 'expo-permissions';
 
-export default class App extends React.Component {
+export default function App() {
+  const [contacts, setContacts] = useState([]);
+  const [hasPermission, setHasPermission] = useState(null);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      contacts:[],
-      permission:null,
-    };
+  const showContacts = async () => {
+    if (!hasPermission) {
+      const { status } = await Permissions.askAsync(Permissions.CONTACTS);
+      setHasPermission(status === 'granted');
+      if (status !== 'granted') return;
+    }
+
+    const contacts = await Contacts.getContactsAsync();
+    setContacts(contacts.data);
   }
 
-  async componentDidMount() {
-    const { status } = await Expo.Permissions.askAsync(Expo.Permissions.CONTACTS);
-    this.setState({ permission: status === 'granted' });
-  }
+  phoneCall = contact => {
+    let phoneNumber = contact.phoneNumbers[0].number; // .replace(/[^\d]/g, '');
+    console.log(phoneNumber);
 
-  showContacts = async () => {
-    const contacts = await Expo.Contacts.getContactsAsync();
-    this.setState({contacts: contacts.data});
-  };
-
-  call = contact => {
-    let phoneNumber = contact.phoneNumbers[0].number.replace(/[\(\)\-\s+]/g, '');
     let link = `tel:${phoneNumber}`;
     Linking.canOpenURL(link)
-    .then((supported) => Linking.openURL(link) )
-    .catch(console.error);
-  };
-
-  keyExtractor = item => item.id;
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Button
-          onPress={this.showContacts}
-          title="Show Contacts"
-        />
-
-        <View style={styles.section}>
-          <Text>Mapped ...</Text>
-          {
-            this.state.contacts && this.state.contacts.map( (contact,i) =>
-              <Text key={i}>{contact.name}</Text>
-            )
-          }
-        </View>
-
-        <View style={styles.section}>
-          <Text>FlatList ...</Text>
-          <FlatList
-            data={this.state.contacts}
-            keyExtractor={(item) => item.id}
-            renderItem={({item}) => <Button title={item.name} style={styles.person} onPress={() => this.call(item)} />}
-          />
-        </View>
-      </View>
-    );
+      .then(() => Linking.openURL(link))
+      .catch(console.error);
   }
+
+  return (
+    <View style={styles.container}>
+      <Text>DeltaV is almost done (for most of you)!</Text>
+      <Button title="Load Contacts" onPress={showContacts} />
+      {hasPermission === false && <Text>Contacts Permissions Required</Text>}
+
+      {/*
+      <View>
+        {contacts.map((contact, idx) => (
+          <Text key={idx}>{contact.name}</Text>
+        ))}
+      </View>
+       */}
+
+       <View>
+         <Text>FlatList...</Text>
+         <FlatList
+          data={contacts}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <Button title={item.name}
+              onPress={() => phoneCall(item)} />
+          )} />
+       </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  person: {
-    marginTop:"1em"
-  },
-  section: {
-    margin: 10,
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
   container: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
     flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 25,
   },
 });
